@@ -1,0 +1,20 @@
+a, a:link, a:visited, #sidebar a,
+.post-title, .page-title, .post-title a:link, .post-title a:visited, #slideshow .post-title a { 
+	color: #dd0a0a;
+}
+.wp-pagenavi .current, .widget-tabnav, .widget-tabnav li a  { 
+	background: #dd0a0a;
+}
+#header, #head {
+	border-bottom: 1px solid #dd0a0a;
+}
+#navi, #foot {
+	background-color: #dd0a0a;
+}
+.post {
+	border-bottom: 1px dashed #dd0a0a;
+}
+.widget-tabnavi {
+	border-top: 1px solid #dd0a0a;
+	border-bottom: 1px solid #dd0a0a;
+}
