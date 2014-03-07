@@ -1,44 +1,40 @@
 <?php get_header(); ?>
 
-	<div id="wrap">
+	<div id="wrap" class="container clearfix">
 		
-		<div id="content">
+		<section id="content" class="primary" role="main">
 		
 		<?php if (have_posts()) : ?>
-		<h2 class="arh"><?php _e('Search results for ', 'themezee_lang'); echo get_search_query(); ?></h2>
+			<h2 id="search-title" class="archive-title">
+				<?php printf( __( 'Search Results for: %s', 'zeeMagazine_language' ), '<span>' . get_search_query() . '</span>' ); ?>
+			</h2>
 		
-			<?php while (have_posts()) : the_post();
+		<?php while (have_posts()) : the_post();
 		
 				get_template_part( 'loop', 'index' );
 		
-			endwhile; ?>
+			endwhile;
 			
-			<div class="more_posts">
-			<?php if(function_exists('wp_pagenavi')) { // if PageNavi is activated ?>
-				<?php wp_pagenavi(); // Use PageNavi ?>
-			<?php } else { // Otherwise, use traditional Navigation ?>
-			
-				<span class="post_links"><?php next_posts_link(__('&laquo; Older Entries', 'themezee_lang')) ?> &nbsp; <?php previous_posts_link (__('Recent Entries &raquo;', 'themezee_lang')) ?></span>
-			<?php }?>
-			</div>
-			
-			
-			<?php else : ?>
+			themezee_display_pagination();
 
-			<h2 class="arh"><?php _e('Search results for ', 'themezee_lang'); echo get_search_query(); ?></h2>
+		else : ?>
+
+			<h2 id="search-title" class="archive-title">
+				<?php printf( __( 'Search Results for: %s', 'zeeMagazine_language' ), '<span>' . get_search_query() . '</span>' ); ?>
+			</h2>
 			
 			<div class="post">
 				
 				<div class="entry">
-					<p><?php _e('No matches. Please try again, or use the navigation menus to find what you search for.', 'themezee_lang'); ?></p>
+					<p><?php _e('No matches. Please try again, or use the navigation menus to find what you search for.', 'zeeMagazine_language'); ?></p>
 				</div>
 				
 			</div>
 
 			<?php endif; ?>
 			
-		</div>
-
+		</section>
+		
 		<?php get_sidebar(); ?>
 	</div>
 	

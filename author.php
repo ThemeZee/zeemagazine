@@ -3,32 +3,26 @@
 <?php // Retrieve Current Author
 	$author = (get_query_var('author_name')) ? get_user_by('slug', get_query_var('author_name')) : get_userdata(get_query_var('author'));
 ?>
-	<div id="wrap">
+	
+	<div id="wrap" class="container clearfix">
 		
-		<div id="content">
+		<section id="content" class="primary" role="main">
 		
-			<h2 class="arh"><?php _e('Archive for', 'themezee_lang'); ?> <?php echo $author->display_name; ?></h2>
+			<h2 id="author-title" class="archive-title">
+				<?php printf(__('Author Archives: %s', 'zeeMagazine_language'), '<span>' . esc_attr($author->display_name) . '</span>'); ?>
+			</h2>
 
 		<?php if (have_posts()) : while (have_posts()) : the_post();
 		
 			get_template_part( 'loop', 'index' );
 		
-		endwhile; ?>
+			endwhile;
 			
-			<?php if(function_exists('wp_pagenavi')) { // if PageNavi is activated ?>
-				<div class="more_posts">
-					<?php wp_pagenavi(); ?>
-				</div>
-			<?php } else { // Otherwise, use traditional Navigation ?>
-				<div class="more_posts">
-					<span class="post_links"><?php next_posts_link(__('&laquo; Older Entries', 'themezee_lang')) ?> &nbsp; <?php previous_posts_link (__('Recent Entries &raquo;', 'themezee_lang')) ?></span>
-				</div>
-			<?php }?>
+		themezee_display_pagination();
 			
-
-		<?php endif; ?>
+		endif; ?>
 			
-		</div>
+		</section>
 		
 		<?php get_sidebar(); ?>
 	</div>

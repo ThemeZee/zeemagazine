@@ -1,25 +1,25 @@
 
-<div id="sidebar">	
-	<?php themezee_widgets_before(); // hook before sidebar widgets ?>
-	<ul>
+<section id="sidebar" class="secondary clearfix" role="complementary">
 
-<?php
-	if(is_page() && is_active_sidebar('sidebar-pages')) : dynamic_sidebar('sidebar-pages');
-    elseif(is_active_sidebar('sidebar-blog')) : dynamic_sidebar('sidebar-blog');
-else : ?>
+	<?php
+		// Check if page and active Sidebar Pages area
+		if(is_page() && is_active_sidebar('sidebar-pages')) : 
+		
+			dynamic_sidebar('sidebar-pages');
+			
+		// Check if Main Sidebar has widgets
+		elseif(is_active_sidebar('sidebar-main')) : 
+		
+			dynamic_sidebar('sidebar-main');
+		
+		// Show hint where to add widgets
+		else : ?>
 
-	<?php wp_list_categories('title_li=<h2 class="widgettitle">Categories</h2>'); ?>
+		<aside class="widget">
+			<h3 class="widgettitle"><?php _e('Widget Area', 'zeeMagazine_language'); ?></h3>
+			<p></p>
+		</aside>
 	
-	<?php wp_list_pages('title_li=<h2 class="widgettitle">Pages</h2>'); ?>
+		<?php endif; ?>
 
-	<li><h2 class="widgettitle"><?php _e('Archives', 'themezee_lang'); ?></h2>
-		<ul>
-		<?php wp_get_archives(); ?>
-		</ul>
-	</li>
-	
-<?php endif; ?>
-	
-	</ul>
-	<?php themezee_widgets_after(); // hook after sidebar widgets ?>
-</div>
+</section>

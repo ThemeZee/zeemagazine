@@ -1,3 +1,6 @@
+zeeMagazine WordPress Theme, Copyright 2013 ThemeZee.com
+zeeMagazine is distributed under the terms of the GNU GPL
+
 ===================================
 Thanks for Downloading zeeMagazine
 ===================================
@@ -16,17 +19,17 @@ Table of Contents
     * B) Installation
     * C) Wordpress Options
     * D) Theme Options
-    * E) Theme Colors
-    * F) Page Templates
-    * G) Theme License
+    * E) Page Templates
+    * F) Theme License
+	* G) Licenses of bundled resources
 -----------------------------------
 
 ===================================
 A) Requirements
 ===================================
 
-The theme has been tested on all major browsers including Firefox 2 & 3.6, Opera 9.5 & 10, 
-Internet Explorer 7 & 8 and Safari 3.2.Your browser should have JavaScript enabled to make this theme work!
+The theme has been tested on all major browsers including Firefox, Opera, 
+Internet Explorer and Safari. Your browser should have JavaScript enabled to make this theme work!
 For example the DropDown Navigation and the Content Slider need Javascript to work.
 
 The theme works on the latest Wordpress version without any problems. Previous versions have not been tested
@@ -71,50 +74,53 @@ D) Theme Options
 ===================================
 
 The theme contains an own admin page for further settings. Login to your Wordpress admin panel and go to 
-WP-Admin > Appearance > “zeeMagazine” Options. There are several settings to change the logo, structure and
-layout of your theme. Furthermore you can manage the Featured Post Slider and 125x125 Ad Spots. 
-Every theme option is quite well explained so there shouldn't be any questions.
+WP-Admin > Appearance > Theme Options. There are several settings to change the logo, layout and colors of your theme. 
+Every theme option is quite well explained so I hope there shouldn't be any questions.
 
-These settings should definitely reduce the launch time for your wordpress blog. For any other changes which
-can't be made with the admin page you have to manually change the files.
-
-===================================
-E) Theme Colors
-===================================
-
-My theme comes with a couple of color skins from which you can select one in the theme option panel. 
-You can also choose the custom color skin and add your own hex color code via the theme option panel.
-
-All styles are stored in the folder /includes/styles. There is a CSS file and a image folder for each color,
-which you can manually change or even add new ones. So you have the opportunity to create individual and 
-unlimited skins for your theme. Have fun!
+These settings should definitely reduce the launch time for your wordpress website. 
+For any other changes which can't be made with the admin page you have to manually change the files.
+In order to do this USE A CHILD THEME!
 
 ===================================
-F) Page Templates
+E) Page Templates
 ===================================
 
 I have included a few, nice page templates for advanced content presentation.
 
-   1. Full Width Template
-      This template shows the page content in full-width without any sidebars.
-
-   2. Sitemap Template
-      Shows a Sitemap with the latest posts, pages, categories and archives.
-	  
-	3. Slider Template
-    Shows a static page with the featured posts slider included.
+	1. Fullwidth Template 
+	This template shows a static page without the blog sidebar
+	
+	2. Frontpage Template
+	Shows a big frontpage image and a horizontal widgetized area.
 
 ===================================
-G) Theme License
+F) Theme License
 ===================================
 
 zeeMagazine is released under the GNU general public license. 
-That means you can use this theme on all of your pages - for personal or commercial purposes
+That means you can use this theme on all of your websites - for personal or commercial purposes!
+
+===================================
+G) Licenses of bundled resources
+===================================
+
+	1. Images, Copyright 2013 ThemeZee.com
+	Images such as navigation or background images included in this theme package are created by myself and licensed under GNU GPL.
+	License URL of Logo / Background images: http://www.gnu.org/licenses/gpl.html
+	
+	2. Custom Header Photography, Copyright 2013 ThemeZee.com
+	The default header photo was taken by Kathrin S. by order of ThemeZee.com and are published under GNU GPL.
+	License URL of photos: http://www.gnu.org/licenses/gpl.html
+	
+	3. Flexslider, Copyright 2012 WooThemes
+	The frontpage slideshow is powered with jQuery FlexSlider v2.0 by WooThemes
+	Free to use under the GPLv2 license: http://www.woothemes.com/flexslider/
+	
+	4. Fonts
+	All Fonts used in the theme are from the Google Font API and are GPL-compatible licensed (mostly SIL Open Font License (OFL))
 
 ===================================
 Enjoy!
 ===================================
 
 Once again, thank you so much for downloading this theme. 
-As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme.
-Just post a comment on themezee.com

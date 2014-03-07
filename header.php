@@ -2,68 +2,65 @@
 <html <?php language_attributes(); ?>>
 
 <head>
-	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+<meta charset="<?php bloginfo( 'charset' ); ?>" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php wp_title( '|', true, 'right' ); ?></title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
-	<title><?php wp_title('|', true, 'right'); ?></title>
-
+<?php /* Embeds HTML5shiv to support HTML5 elements in older IE versions plus CSS Backgrounds */ ?>
+<!--[if lt IE 9]>
+<script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
+<![endif]-->
 <?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
 
-<?php themezee_wrapper_before(); // hook before #wrapper ?>
-<div id="wrapper">
+<div id="wrapper" class="hfeed">
 	
-	<?php themezee_header_before(); // hook before #header ?>
-	<div id="header">
+	<div id="header-wrap">
 	
-		<div id="topnavi">
+		<nav id="topnav" class="clearfix" role="navigation">
 			<?php 
 				// Get Navigation out of Theme Options
-				wp_nav_menu(array('theme_location' => 'top_navi', 'container' => false, 'menu_id' => 'topnav', 'echo' => true, 'fallback_cb' => '', 'before' => '', 'after' => '', 'link_before' => '', 'link_after' => '', 'depth' => 0));
+				wp_nav_menu(array('theme_location' => 'top_navi', 'container' => false, 'menu_id' => 'topnav-menu', 'echo' => true, 'fallback_cb' => '', 'before' => '', 'after' => '', 'link_before' => '', 'link_after' => '', 'depth' => 1));
 			?>
-			<div id="topnavi_icons">
-				<?php locate_template('/head-socialbuttons.php', true); ?>
-				<div class="clear"></div>
-			</div>
-			
-		</div>
-
-		<div id="head">
-			<div id="head_left">
-				<?php 
-				$options = get_option('themezee_options');
-				if ( isset($options['themeZee_general_logo']) and $options['themeZee_general_logo'] <> "" ) { ?>
-					<a href="<?php echo home_url(); ?>"><img src="<?php echo esc_url($options['themeZee_general_logo']); ?>" alt="Logo" /></a>
-				<?php } else { ?>
-					<a href="<?php echo home_url(); ?>/"><h1><?php bloginfo('name'); ?></h1></a>
-				<?php } ?>
-			</div>
-			<div id="head_right">
-				<?php 
-				$options = get_option('themezee_options');
-				if ( isset($options['themeZee_ads_header_image']) and $options['themeZee_ads_header_image'] <> "" and $options['themeZee_ads_header_show'] == 'true' ) { ?>
-					<a href="<?php echo esc_url($options['themeZee_ads_header_url']); ?>"><img src="<?php echo esc_url($options['themeZee_ads_header_image']); ?>" alt="banner" /></a>
-				<?php } ?>
-			</div>
-			<div class="clear"></div>
-		</div>
-
-		<div id="navi">
-			<?php 
-			// Get Navigation out of Theme Options
-				wp_nav_menu(array('theme_location' => 'main_navi', 'container' => false, 'menu_id' => 'nav', 'echo' => true, 'fallback_cb' => 'themezee_default_menu', 'before' => '', 'after' => '', 'link_before' => '', 'link_after' => '', 'depth' => 0));
-			?>
-		</div>
-		<div class="clear"></div>
-
-	</div>
-	<?php themezee_header_after(); // hook after #header ?>	
+		</nav>
 	
-		<?php if( get_header_image() != '' ) : ?>
-			<div id="custom_header">
-				<img src="<?php echo get_header_image(); ?>" />
-			</div>
-		<?php endif; ?>
+		<header id="header" class="clearfix" role="banner">
 
+			<div id="logo">
+			
+				<a href="<?php echo esc_url(home_url('/')); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+			<?php // Display Logo Image or Site Title
+				$options = get_option('zeemagazine_options');
+				if ( isset($options['themeZee_general_logo']) and $options['themeZee_general_logo'] <> "" ) : ?>
+					<img class="logo-image" src="<?php echo esc_url($options['themeZee_general_logo']); ?>" alt="Logo" /></a>
+			<?php else: ?>
+					<h1 class="site-title"><?php bloginfo('name'); ?></h1>
+			<?php endif; ?>
+				</a>
+				
+			<?php if(isset($options['themeZee_general_tagline']) and $options['themeZee_general_tagline'] == 'true') : ?>
+				<h2 class="site-description"><?php echo bloginfo('description'); ?></h2>
+			<?php endif; ?>
+			
+			</div>
+
+		</header>
+	
+	</div>
+	
+	<div id="navi-wrap">
+		<nav id="mainnav" class="clearfix" role="navigation">
+			<?php 
+				// Get Navigation out of Theme Options
+				wp_nav_menu(array('theme_location' => 'main_navi', 'container' => false, 'menu_id' => 'mainnav-menu', 'echo' => true, 'fallback_cb' => 'themezee_default_menu', 'before' => '', 'after' => '', 'link_before' => '', 'link_after' => '', 'depth' => 0));
+			?>
+		</nav>
+	</div>
+	
+	<?php // Display Custom Header Image
+		themezee_display_custom_header(); ?>
+		

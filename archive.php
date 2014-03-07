@@ -1,35 +1,30 @@
 <?php get_header(); ?>
 
-	<div id="wrap">
+	<div id="wrap" class="container clearfix">
 		
-		<div id="content">
-		
-		<?php if (is_category()) { ?><h2 class="arh"><?php _e('Archive for', 'themezee_lang'); ?> <?php echo single_cat_title(); ?></h2>
-		<?php } elseif (is_date()) { ?><h2 class="arh"><?php _e('Archive for', 'themezee_lang'); ?> <?php the_time(get_option('date_format')); ?></h2>
-		<?php } elseif (is_author()) { ?><h2 class="arh"><?php _e('Author Archive', 'themezee_lang'); ?></h2>
-		<?php } elseif (is_tag()) { ?><h2 class="arh"><?php _e('Tag Archive for', 'themezee_lang'); ?> <?php echo single_tag_title('', true); ?></h2>
-		<?php } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?><h2 class="arh"><?php _e('Archives', 'themezee_lang'); ?></h2><?php } ?>
+		<section id="content" class="primary" role="main">
+
+		<h2 id="date-title" class="archive-title">
+			<?php // Display Archive Title
+			if ( is_date() ) :
+				printf( __( 'Monthly Archives: %s', 'zeeMagazine_language' ), '<span>' . get_the_date( _x( 'F Y', 'date format of monthly archives', 'zeeMagazine_language' ) ) . '</span>' );
+			else :
+				_e( 'Archives', 'zeeMagazine_language' );
+			endif;
+			?>
+		</h2>
 		
 		<?php if (have_posts()) : while (have_posts()) : the_post();
 		
 			get_template_part( 'loop', 'index' );
 		
-		endwhile; ?>
+			endwhile;
 			
-			<?php if(function_exists('wp_pagenavi')) { // if PageNavi is activated ?>
-				<div class="more_posts">
-					<?php wp_pagenavi(); ?>
-				</div>
-			<?php } else { // Otherwise, use traditional Navigation ?>
-				<div class="more_posts">
-					<span class="post_links"><?php next_posts_link(__('&laquo; Older Entries', 'themezee_lang')) ?> &nbsp; <?php previous_posts_link (__('Recent Entries &raquo;', 'themezee_lang')) ?></span>
-				</div>
-			<?php }?>
-			
+		themezee_display_pagination();
 
-		<?php endif; ?>
+		endif; ?>
 			
-		</div>
+		</section>
 		
 		<?php get_sidebar(); ?>
 	</div>

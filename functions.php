@@ -2,7 +2,7 @@
 
 // Set Content Width
 if ( ! isset( $content_width ) )
-	$content_width = 580;
+	$content_width = 860;
 
 /*==================================== THEME SETUP ====================================*/
 
@@ -10,25 +10,43 @@ if ( ! isset( $content_width ) )
 add_action('wp_enqueue_scripts', 'themezee_enqueue_scripts');
 
 if ( ! function_exists( 'themezee_enqueue_scripts' ) ):
-function themezee_enqueue_scripts() { 
-	
+function themezee_enqueue_scripts() {
+
 	// Register and Enqueue Stylesheet
-	wp_register_style('zeeMagazine_stylesheet', get_stylesheet_uri());
-	wp_enqueue_style('zeeMagazine_stylesheet');
-	
-	// Enqueue jQuery Framework
-	wp_enqueue_script('jquery');
-	
-	// Register and enqueue the Malsup Cycle Plugin
-	wp_register_script('zee_jquery-cycle', get_template_directory_uri() .'/includes/js/jquery.cycle.all.min.js', array('jquery'));
-	wp_enqueue_script('zee_jquery-cycle');
+	wp_enqueue_style('themezee_zeeMagazine_stylesheet', get_stylesheet_uri());
+
+	// Register and Enqueue FlexSlider JS and CSS if necessary
+	$options = get_option('zeemagazine_options');
+	if(isset($options['themeZee_frontpage_slider_active']) and $options['themeZee_frontpage_slider_active'] == 'true' ) :
+
+		// FlexSlider CSS
+		wp_enqueue_style('themezee_zeeMagazine_flexslider', get_template_directory_uri() . '/css/flexslider.css');
+
+		// FlexSlider JS
+		wp_enqueue_script('themezee_jquery_flexslider', get_template_directory_uri() .'/js/jquery.flexslider-min.js', array('jquery'));
+
+		// Register and enqueue slider.js
+		wp_enqueue_script('themezee_jquery_frontpage_slider', get_template_directory_uri() .'/js/slider.js', array('themezee_jquery_flexslider'));
+
+	endif;
+
+	// Register and Enqueue Load More Posts JS if necessary
+	if(isset($options['themeZee_frontpage_posts_active']) and $options['themeZee_frontpage_posts_active'] == 'true') :
+
+		// Register and enqueue posts.js
+		wp_enqueue_script('themezee_jquery_load_posts', get_template_directory_uri() .'/js/posts.js', array('jquery'));
+
+	endif;
+
+	// Register and enqueue navigation.js
+	wp_enqueue_script('themezee_jquery_navigation', get_template_directory_uri() .'/js/navigation.js', array('jquery'));
+
 }
 endif;
 
-
 // Load comment-reply.js if comment form is loaded and threaded comments activated
 add_action( 'comment_form_before', 'themezee_enqueue_comment_reply' );
-	
+
 function themezee_enqueue_comment_reply() {
 	if( get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -40,56 +58,85 @@ function themezee_enqueue_comment_reply() {
 add_action( 'after_setup_theme', 'themezee_setup' );
 
 if ( ! function_exists( 'themezee_setup' ) ):
-function themezee_setup() { 
-	
+function themezee_setup() {
+
 	// init Localization
-	load_theme_textdomain('themezee_lang', get_template_directory() . '/includes/lang' );
-	
+	load_theme_textdomain('zeeMagazine_language', get_template_directory() . '/languages' );
+
 	// Add Theme Support
 	add_theme_support('post-thumbnails');
 	add_theme_support('automatic-feed-links');
 	add_editor_style();
 
 	// Add Custom Background
-	add_theme_support('custom-background', array('default-color' => 'ddd'));
+	add_theme_support('custom-background', array('default-color' => 'e5e5e5'));
 
 	// Add Custom Header
 	add_theme_support('custom-header', array(
-		'default-image' => get_template_directory_uri() . '/images/default_header.jpg',
 		'header-text' => false,
-		'width'	=> 950,
-		'height' => 150,
-		'flex-height' => true,
-		'wp-head-callback' => 'themezee_header_style'));
-		
+		'width'	=> 1340,
+		'height' => 250,
+		'flex-height' => true));
+
 	// Register Navigation Menus
-	register_nav_menu( 'top_navi', __('Top Navigation', 'themezee_lang') );
-	register_nav_menu( 'main_navi', __('Main Navigation', 'themezee_lang') );
+	register_nav_menu( 'main_navi', __('Main Navigation', 'zeeMagazine_language') );
+
 }
 endif;
 
-// Defines extra CSS for Custom Header
-function themezee_header_style() {
-    ?><style type="text/css">
-        #custom_header img {
-			margin-bottom: -3px;
-        }
-    </style><?php
+
+// Add custom Image Sizes
+add_action( 'after_setup_theme', 'themezee_add_image_sizes' );
+
+if ( ! function_exists( 'themezee_add_image_sizes' ) ):
+function themezee_add_image_sizes() {
+
+	// Add Custom Header Image Size
+	add_image_size( 'custom_header_image', 1340, 250, true);
+
+	// Add Featured Image Size
+	add_image_size( 'featured_image', 200, 200, true);
+
+	// Add Slider Image Size
+	add_image_size( 'slider_image', 880, 290, true);
+
+	// Add Frontpage Thumbnail Sizes
+	add_image_size( 'frontpage_big_image', 600, 240, true);
+	add_image_size( 'frontpage_small_image', 90, 90, true);
+
+	// Add Widget Post Thumbnail Size
+	add_image_size( 'widget_post_thumb', 75, 75, true);
+
 }
+endif;
 
 
 // Register Sidebars
 add_action( 'widgets_init', 'themezee_register_sidebars' );
 
 if ( ! function_exists( 'themezee_register_sidebars' ) ):
-function themezee_register_sidebars() { 
-	
+function themezee_register_sidebars() {
+
 	// Register Sidebars
-	register_sidebar(array('name' => __('Sidebar Blog', 'themezee_lang'), 'id' => 'sidebar-blog'));
-	register_sidebar(array('name' => __('Sidebar Pages', 'themezee_lang'), 'id' => 'sidebar-pages'));
+	register_sidebar( array(
+		'name' => __( 'Main Sidebar', 'zeeMagazine_language' ),
+		'id' => 'sidebar-main',
+		'description' => __( 'Appears on posts and also pages (in case Sidebar Pages has no widgets) except frontpage/fullwidth template.', 'zeeMagazine_language' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => '</aside>',
+		'before_title' => '<h3 class="widgettitle">',
+		'after_title' => '</h3>',
+	));
+	register_sidebar( array(
+		'name' => __( 'Sidebar Pages', 'zeeMagazine_language' ),
+		'id' => 'sidebar-pages',
+		'description' => __( 'Appears on static pages only. Leave this widget area empty to use Main Sidebar on pages.', 'zeeMagazine_language' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => '</aside>',
+		'before_title' => '<h3 class="widgettitle">',
+		'after_title' => '</h3>',
+	));
 	
-	// Register Footer Bars
-	register_sidebar(array('name' => __('Footer', 'themezee_lang'), 'id' => 'sidebar-footer'));
 }
 endif;
 
@@ -100,22 +147,20 @@ endif;
 add_action( 'after_setup_theme', 'themezee_include_files' );
 
 if ( ! function_exists( 'themezee_include_files' ) ):
-function themezee_include_files() { 
+function themezee_include_files() {
 
-	// include Admin Files
-	locate_template('/includes/admin/theme-functions.php', true);
-	locate_template('/includes/admin/theme-admin.php', true);
+	// include Theme Option Files
+	require( get_template_directory() . '/includes/options/options-setup.php' );
+	require( get_template_directory() . '/includes/options/options-framework.php' );
 
-	// include custom Javascript and custom CSS Handler files
-	locate_template('/includes/js/jscript.php', true);
-	locate_template('/includes/css/csshandler.php', true);
-	
-	// include Theme Hooks
-	locate_template('/includes/theme-hooks.php', true);
-	
-	// include Widget Files
-	locate_template('/includes/widgets/theme-widget-ads.php', true);
-	locate_template('/includes/widgets/theme-widget-socialmedia.php', true);
+	// include Customization Files
+	require( get_template_directory() . '/includes/customization/custom-colors.php' );
+	require( get_template_directory() . '/includes/customization/custom-layout.php' );
+	require( get_template_directory() . '/includes/customization/custom-jscript.php' );
+
+	// include Template Functions
+	require( get_template_directory() . '/includes/template-tags.php' );
+
 }
 endif;
 
@@ -141,7 +186,7 @@ function themezee_wp_title( $title, $sep = '' ) {
 
 	// Add a page number if necessary.
 	if ( $paged >= 2 || $page >= 2 )
-		$title = "$title $sep " . sprintf( __( 'Page %s', 'themezee' ), max( $paged, $page ) );
+		$title = "$title $sep " . sprintf( __( 'Page %s', 'zeeMagazine_language' ), max( $paged, $page ) );
 
 	return $title;
 }
@@ -149,13 +194,15 @@ function themezee_wp_title( $title, $sep = '' ) {
 
 // Add Default Menu Fallback Function
 function themezee_default_menu() {
-	echo '<ul id="nav" class="menu">'. wp_list_pages('title_li=&echo=0') .'</ul>';
+	echo '<ul id="mainnav-menu" class="menu">'. wp_list_pages('title_li=&echo=0') .'</ul>';
 }
 
 
 // Display Credit Link Function
 function themezee_credit_link() { ?>
-	<a href="http://themezee.com/themes/zeemagazine/"><?php _e('zeeMagazine Theme', 'themezee_lang'); ?></a>
+
+	<a href="http://themezee.com/themes/zeemagazine/"><?php _e('zeeMagazine Theme', 'zeeMagazine_language'); ?></a>
+
 <?php
 }
 
@@ -163,9 +210,19 @@ function themezee_credit_link() { ?>
 // Change Excerpt Length
 add_filter('excerpt_length', 'themezee_excerpt_length');
 function themezee_excerpt_length($length) {
+    return 60;
+}
+
+
+// Slideshow Excerpt Length
+function themezee_slideshow_excerpt_length($length) {
     return 30;
 }
 
+// Frontpage Category Excerpt Length
+function themezee_frontpage_category_excerpt_length($length) {
+    return 25;
+}
 
 // Change Excerpt More
 add_filter('excerpt_more', 'themezee_excerpt_more');
@@ -174,27 +231,73 @@ function themezee_excerpt_more($more) {
 }
 
 
-// Add Postmeta Data
-if ( ! function_exists( 'themezee_display_postmeta' ) ):
-function themezee_display_postmeta() { ?>
-	<span class="date"><a href="<?php the_permalink() ?>"><?php the_time(get_option('date_format')); ?></a> </span>
-	<span class="author"><?php the_author_posts_link(); ?> </span>
-	<span class="folder"><?php the_category(', ') ?> </span>
+// Custom Template for comments and pingbacks.
+if ( ! function_exists( 'themezee_list_comments' ) ):
+function themezee_list_comments($comment, $args, $depth) {
+
+	$GLOBALS['comment'] = $comment;
+
+	if( $comment->comment_type == 'pingback' or $comment->comment_type == 'trackback' ) : ?>
+
+		<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
+			<p><?php _e( 'Pingback:', 'zeeMagazine_language' ); ?> <?php comment_author_link(); ?>
+			<?php edit_comment_link( __( '(Edit)', 'zeeMagazine_language' ), '<span class="edit-link">', '</span>' ); ?>
+			</p>
+
+	<?php else : ?>
+
+		<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
+
+			<div id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+
+				<div class="comment-author vcard">
+					<?php echo get_avatar( $comment, 56 ); ?>
+					<?php printf(__('<span class="fn">%s</span>', 'zeeMagazine_language'), get_comment_author_link()) ?>
+				</div>
+
+		<?php if ($comment->comment_approved == '0') : ?>
+				<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'zeeMagazine_language' ); ?></p>
+		<?php endif; ?>
+
+				<div class="comment-meta commentmetadata">
+					<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf(__('%1$s at %2$s', 'zeeMagazine_language'), get_comment_date(),  get_comment_time()) ?></a>
+					<?php edit_comment_link(__('(Edit)', 'zeeMagazine_language'),'  ','') ?>
+				</div>
+
+				<div class="comment-content"><?php comment_text(); ?></div>
+
+				<div class="reply">
+					<?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+				</div>
+
+			</div>
 <?php
-}
-endif;
-
-
-// Add Postinfo Data
-if ( ! function_exists( 'themezee_display_postinfo' ) ):
-function themezee_display_postinfo() { ?>
-	<span class="comment"><?php comments_popup_link( __('No comments', 'themezee_lang'),__('One comment','themezee_lang'),__('% comments','themezee_lang') ); ?></span>
-<?php if (get_the_tags()) : ?>
-	<span class="tag"><?php the_tags('', ', '); ?> </span>
-<?php 
 	endif;
-	edit_post_link(__( 'Edit', 'themezee_lang' ), ' | ');
+
 }
 endif;
 
+
+// Retrieve Frontpage Posts Query
+function themezee_frontpage_posts_query($paged) {
+
+	// Get Query Arguments
+	$options = get_option('zeemagazine_options');
+	$frontpage_posts_category = $options['themeZee_frontpage_posts_category'];
+
+	$query_arguments = array(
+		'post_type' => 'post',
+		'post_status' => 'publish',
+		'ignore_sticky_posts' => true,
+		'posts_per_page' => 4,
+		'paged' => $paged,
+		'orderby' => 'date',
+		'order' => 'DESC',
+		'category_name' => $frontpage_posts_category
+		);
+
+	$zee_frontpage_posts_query = new WP_Query($query_arguments);
+
+	return $zee_frontpage_posts_query;
+}
 ?>

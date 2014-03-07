@@ -1,20 +1,20 @@
 <?php get_header(); ?>
 
-	<div id="wrap">
+	<div id="wrap" class="container clearfix">
 		
-		<div id="content">
+		<section id="content" class="primary" role="main">
 		
 		<?php if (have_posts()) : while (have_posts()) : the_post();
 		
 			get_template_part( 'loop', 'single' );
-		
-		endwhile; ?>
 
-		<?php endif; ?>
+			endwhile;
+		
+		endif; ?>
 			
 		<?php comments_template(); ?>
 		
-		</div>
+		</section>
 		
 		<?php get_sidebar(); ?>
 	</div>

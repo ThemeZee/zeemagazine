@@ -1,49 +1,51 @@
 <?php 
+/***
+ * Comments Template
+ *
+ * This template displays the current comments of a post and the comment form
+ *
+ */
+
+if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
+	die ('Please do not load this page directly. Thanks!');
+
+if ( post_password_required()) : ?>
+	<p><?php _e('Enter password to view comments.', 'zeeMagazine_language'); ?></p>
+<?php return; endif; ?>
+
+
+<?php if ( have_comments() or comments_open() ) : ?>
+
+	<div id="comments">
 	
-// Do not delete these lines
-	if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
-		die ('Please do not load this page directly. Thanks!');
+		<?php if ( have_comments() ) : ?>
 
-	if ( post_password_required()) { ?>
-		<p><?php _e('Enter password to view comments.', 'themezee_lang'); ?></p>
-	<?php return; } ?>
-	
+			<h3 class="comments-title"><span><?php comments_number( '', __('One comment','zeeMagazine_language'), __('% comments','zeeMagazine_language') );?></span></h3>
 
-<!-- You can start editing here. -->
+			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
+			<div class="comment-pagination clearfix">
+				<div class="alignleft"><?php previous_comments_link(); ?></div>
+				<div class="alignright"><?php next_comments_link() ?></div>
+			</div>
+			<?php endif; ?>
+			
+			<ul class="commentlist">
+				<?php wp_list_comments( array('callback' => 'themezee_list_comments')); ?>
+			</ul>
 
-<?php if ( have_comments() ) : ?>
+			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
+			<div class="comment-pagination clearfix">
+				<div class="alignleft"><?php previous_comments_link() ?></div>
+				<div class="alignright"><?php next_comments_link() ?></div>
+			</div>
+			<?php endif; ?>
+			
+		<?php endif; ?>
 
-<div id="comments">
-	<h3><?php comments_number(__('No comments', 'themezee_lang'),__('One comment','themezee_lang'),__('% comments','themezee_lang') );?></h3>
+		<?php if ( comments_open() ) : ?>
+			<?php comment_form(array('comment_notes_after' => '')); ?>
+		<?php endif; ?>
 
-	<?php if ( get_comment_pages_count() > 1 ) : ?>
-	<div class="comment_navi">
-		<div class="alignleft"><?php previous_comments_link() ?></div>
-		<div class="alignright"><?php next_comments_link() ?></div>
 	</div>
-	<div class="clear"></div>
-	<?php endif; ?>
-	
-	<ol class="commentlist">
-	<?php wp_list_comments(array('avatar_size' => 48)); ?>
-	</ol>
 
-	<?php if ( get_comment_pages_count() > 1 ) : ?>
-	<div class="comment_navi">
-		<div class="alignleft"><?php previous_comments_link() ?></div>
-		<div class="alignright"><?php next_comments_link() ?></div>
-	</div>
-	<div class="clear"></div>
-	<?php endif; ?>
-</div>
- <?php else : ?>
-
-	<?php if ( ! comments_open() and !is_page() ) : ?>
-		<p class="nocomments"><?php _e('Comments are closed.', 'themezee_lang'); ?></p>
-	<?php endif; ?>
-<?php endif; ?>
-
-<?php if ( comments_open() ) : ?>
-	<?php comment_form(array('comment_notes_after' => '')); ?>
-	<div class="clear"></div>
 <?php endif; ?>
