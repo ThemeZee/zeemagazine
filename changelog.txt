@@ -2,6 +2,18 @@
 zeeMagazine Changelog
 ===================================
 
+Version 2.0
+-----------------------------------
+- added new responsive design
+- added new features and removed old ones
+
+PLEASE NOTE: 
+===================================
+VERSION 2.0 is a COMPLETE REWRITTEN theme from scratch.
+Please make sure to check your theme options after updating the theme.
+===================================
+
+
 Version 1.4.1
 -----------------------------------
 - added "open in new window" feature to social media icons widget
