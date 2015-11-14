@@ -685,7 +685,7 @@ textarea {
 
 /* Custom Header Image */
 .header-image {
-	margin-top: 0.8em;
+	margin-top: 2em;
 	text-align: center;
 }
 
@@ -1335,7 +1335,7 @@ textarea {
 
 /* Theme Pagination */
 .post-pagination {
-	margin: 0 0 0.8em 0;
+	margin: 0 0 2em 0;
 }
 
 .post-pagination a,
@@ -1365,15 +1365,27 @@ textarea {
 # 11.0 - Comments
 --------------------------------------------------------------*/
 
-/* Comment Header */
-.comments-header {
-	margin: 0 0 0.8em;
-	padding: 0.6em 1em;
-	background: #fbfbfb;
+.comments-area,
+.comment-respond {
+	margin: 0 0 2em 0;
+	padding: 0;
+	background: #fff;
 	border: 1px solid #e5e5e5;
 }
 
-.comments-header .comments-title {
+/* Comment Header */
+.comments-header, 
+.comment-reply-title {
+	margin: 0;
+	padding: 0.6em 1em;
+	font-size: 17px;
+	font-size: 1.0625rem;
+	background: #fbfbfb;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.comments-header .comments-title, 
+.comment-reply-title span {
 	margin: 0;
 	padding: 0;
 	font-size: 16px;
@@ -1390,12 +1402,15 @@ textarea {
 }
 
 .comment {
-	margin: 0 0 0.8em 0;
-	padding: 0.8em 1em 0;
-	background: #fff;
-	border: 1px solid #e5e5e5;
+	margin: 0;
+	padding: 1em;
+	border-bottom: 1px solid #e5e5e5;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
+}
+
+.comment-list .comment:last-child {
+	border-bottom: none;
 }
 
 .comment-meta {
@@ -1440,12 +1455,20 @@ textarea {
 	list-style: none;
 }
 
+.comment ol.children .comment {
+	border: 1px solid #e5e5e5;
+	background: #fbfbfb;
+}
+
+.comment ol.children .comment .comment {
+	background: #f5f5f5;
+}
+
+
 /* Comment Pagination */
 .comment-navigation {
-	margin: 0 0 0.8em 0;
-	padding: 1em;
-	background: #fff;
-	border: 1px solid #e5e5e5;
+	margin: 0;
+	padding: 0.6em 1em;
 	font-size: 14px;
 	font-size: 0.875rem;
 }
@@ -1463,27 +1486,8 @@ textarea {
 }
 
 /* Comment Form */
-.comment-respond {
-	margin: 0 0 0.8em 0;
-	padding: 1em 1em 0;
-	background: #fff;
-	border: 1px solid #e5e5e5;
-}
-
-.comment-reply-title {
-	margin: -1em -1em 0.8em;
-	padding: 0.6em 1em;
-	font-size: 17px;
-	font-size: 1.0625rem;
-	background: #fbfbfb;
-	border-bottom: 1px solid #e5e5e5;
-}
-
-.comment-reply-title span {
-	font-size: 16px;
-	font-size: 1rem;
-	font-weight: bold;
-	color: #151515;
+.comment-form {
+	padding: 0 1em;
 }
 
 .comment-form label {

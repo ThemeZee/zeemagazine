@@ -77,12 +77,13 @@ if ( comments_open() or have_comments() ) : ?>
 		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'zeemagazine' ); ?></p>
 	<?php endif; ?>
 
-	<?php comment_form( array( 
+</div><!-- #comments -->
+
+<?php comment_form( array( 
 		'title_reply' => '<span>' . esc_html__( 'Leave a Reply', 'zeemagazine' ) . '</span>',
 		'comment_notes_after' => ''
 		)
-	); ?>
-
-</div><!-- #comments -->
+	); 
+?>
 
 <?php endif; ?>

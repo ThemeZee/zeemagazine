@@ -27,7 +27,7 @@ $theme_options = zeemagazine_theme_options();
 	<div id="page" class="hfeed site">
 		
 		<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'zeemagazine' ); ?></a>
-		
+			
 		<header id="masthead" class="site-header clearfix" role="banner">
 			
 			<div class="header-main clearfix">
