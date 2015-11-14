@@ -1,25 +1,28 @@
+<?php
+/**
+ * The sidebar containing the main widget area.
+ *
+ * @package zeePersonal
+ */
 
-<section id="sidebar" class="secondary clearfix" role="complementary">
+?>
+	<section id="secondary" class="sidebar widget-area clearfix" role="complementary">
 
-	<?php
-		// Check if page and active Sidebar Pages area
-		if(is_page() && is_active_sidebar('sidebar-pages')) : 
+		<?php // Check if Sidebar has widgets
+		if( is_active_sidebar('sidebar') ) : 
 		
-			dynamic_sidebar('sidebar-pages');
-			
-		// Check if Main Sidebar has widgets
-		elseif(is_active_sidebar('sidebar-main')) : 
-		
-			dynamic_sidebar('sidebar-main');
+			dynamic_sidebar('sidebar');
 		
 		// Show hint where to add widgets
 		else : ?>
 
-		<aside class="widget">
-			<h3 class="widgettitle"><?php _e('Widget Area', 'zeeMagazine_language'); ?></h3>
-			<p></p>
-		</aside>
+			<aside class="widget clearfix">
+				<div class="widget-header"><h3 class="widget-title"><?php esc_html_e( 'Sidebar', 'zeepersonal' ); ?></h3></div>
+				<div class="textwidget">
+					<p><?php esc_html_e( 'Please go to Appearance &#8594; Widgets and add some widgets to your sidebar.', 'zeepersonal' ); ?></p>
+				</div>
+			</aside>
 	
-		<?php endif; ?>
+	<?php endif; ?>
 
-</section>
+	</section><!-- #secondary -->

@@ -1,20 +1,49 @@
-		
-	<div id="footer-wrap">
-		
-		<footer id="footer" class="container clearfix" role="contentinfo">
-			<?php 
-				$options = get_option('zeemagazine_options');
-				if ( isset($options['themeZee_general_footer']) and $options['themeZee_general_footer'] <> "" ) :
-					echo do_shortcode(wp_kses_post($options['themeZee_general_footer']));
-				endif;
-			?>
-			<div id="credit-link"><?php themezee_credit_link(); ?></div>
-		</footer>
-		
-	</div>
+<?php
+/**
+ * The template for displaying the footer.
+ *
+ * Contains all content after the main content area and sidebar
+ *
+ * @package zeePersonal
+ */
+ 
+?>
 	
-</div><!-- end #wrapper -->
+	</div><!-- #content -->
+	
+	<?php do_action( 'zeepersonal_before_footer' ); ?>
+
+	<footer id="colophon" class="site-footer clearfix" role="contentinfo">
+		
+		<div class="footer-main container clearfix">
+			
+			<div id="footer-text" class="site-info">
+				
+				<?php do_action('zeepersonal_footer_text'); ?>
+			
+			</div><!-- .site-info -->
+			
+			<nav id="footer-links" class="footer-navigation navigation clearfix" role="navigation">
+				<?php 
+					// Display Footer Navigation
+					wp_nav_menu( array(
+						'theme_location' => 'footer', 
+						'container' => false, 
+						'menu_class' => 'footer-navigation-menu', 
+						'echo' => true, 
+						'fallback_cb' => '',
+						'depth' => 1)
+					);
+				?>
+			</nav><!-- .footer-navigation -->
+			
+		</div><!-- .footer-main -->
+
+	</footer><!-- #colophon -->
+
+</div><!-- #page -->
 
 <?php wp_footer(); ?>
+
 </body>
 </html>

@@ -1,22 +1,26 @@
-<?php get_header(); ?>
+<?php
+/**
+ * The template for displaying all single posts.
+ *
+ * @package zeePersonal
+ */
 
-	<div id="wrap" class="container clearfix">
-		
-		<section id="content" class="primary" role="main">
-		
-		<?php if (have_posts()) : while (have_posts()) : the_post();
-		
-			get_template_part( 'loop', 'single' );
+get_header(); ?>
 
-			endwhile;
+	<section id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
 		
-		endif; ?>
+		<?php while (have_posts()) : the_post();
+
+			get_template_part( 'template-parts/content', 'single' );
 			
-		<?php comments_template(); ?>
+			comments_template();
+
+		endwhile; ?>
 		
-		</section>
-		
-		<?php get_sidebar(); ?>
-	</div>
+		</main><!-- #main -->
+	</section><!-- #primary -->
 	
-<?php get_footer(); ?>	
+	<?php get_sidebar(); ?>
+	
+<?php get_footer(); ?>

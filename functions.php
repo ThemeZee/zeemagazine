@@ -1,303 +1,176 @@
 <?php
+/**
+ * zeePersonal functions and definitions
+ *
+ * @package zeePersonal
+ */
 
-// Set Content Width
-if ( ! isset( $content_width ) )
-	$content_width = 860;
-
-/*==================================== THEME SETUP ====================================*/
-
-// Load default style.css and Javascripts
-add_action('wp_enqueue_scripts', 'themezee_enqueue_scripts');
-
-if ( ! function_exists( 'themezee_enqueue_scripts' ) ):
-function themezee_enqueue_scripts() {
-
-	// Register and Enqueue Stylesheet
-	wp_enqueue_style('themezee_zeeMagazine_stylesheet', get_stylesheet_uri());
-
-	// Register and Enqueue FlexSlider JS and CSS if necessary
-	$options = get_option('zeemagazine_options');
-	if(isset($options['themeZee_frontpage_slider_active']) and $options['themeZee_frontpage_slider_active'] == 'true' ) :
-
-		// FlexSlider CSS
-		wp_enqueue_style('themezee_zeeMagazine_flexslider', get_template_directory_uri() . '/css/flexslider.css');
-
-		// FlexSlider JS
-		wp_enqueue_script('themezee_jquery_flexslider', get_template_directory_uri() .'/js/jquery.flexslider-min.js', array('jquery'));
-
-		// Register and enqueue slider.js
-		wp_enqueue_script('themezee_jquery_frontpage_slider', get_template_directory_uri() .'/js/slider.js', array('themezee_jquery_flexslider'));
-
-	endif;
-
-	// Register and Enqueue Load More Posts JS if necessary
-	if(isset($options['themeZee_frontpage_posts_active']) and $options['themeZee_frontpage_posts_active'] == 'true') :
-
-		// Register and enqueue posts.js
-		wp_enqueue_script('themezee_jquery_load_posts', get_template_directory_uri() .'/js/posts.js', array('jquery'));
-
-	endif;
-
-	// Register and enqueue navigation.js
-	wp_enqueue_script('themezee_jquery_navigation', get_template_directory_uri() .'/js/navigation.js', array('jquery'));
-
-}
+/**
+ * zeePersonal only works in WordPress 4.2 or later.
+ */
+if ( version_compare( $GLOBALS['wp_version'], '4.2', '<' ) ) :
+	require get_template_directory() . '/inc/back-compat.php';
 endif;
 
-// Load comment-reply.js if comment form is loaded and threaded comments activated
-add_action( 'comment_form_before', 'themezee_enqueue_comment_reply' );
 
-function themezee_enqueue_comment_reply() {
-	if( get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
-}
+if ( ! function_exists( 'zeepersonal_setup' ) ) :
+/**
+ * Sets up theme defaults and registers support for various WordPress features.
+ *
+ * Note that this function is hooked into the after_setup_theme hook, which
+ * runs before the init hook. The init hook is too late for some features, such
+ * as indicating support for post thumbnails.
+ */
+function zeepersonal_setup() {
 
+	// Make theme available for translation. Translations can be filed in the /languages/ directory.
+	load_theme_textdomain( 'zeepersonal', get_template_directory() . '/languages' );
 
-// Setup Function: Registers support for various WordPress features
-add_action( 'after_setup_theme', 'themezee_setup' );
+	// Add default posts and comments RSS feed links to head.
+	add_theme_support( 'automatic-feed-links' );
 
-if ( ! function_exists( 'themezee_setup' ) ):
-function themezee_setup() {
+	// Let WordPress manage the document title.
+	add_theme_support( 'title-tag' );
 
-	// init Localization
-	load_theme_textdomain('zeeMagazine_language', get_template_directory() . '/languages' );
+	// Enable support for Post Thumbnails on posts and pages.
+	add_theme_support( 'post-thumbnails' );
+	
+	// Set detfault Post Thumbnail size
+	set_post_thumbnail_size( 900, 400, true );
 
-	// Add Theme Support
-	add_theme_support('post-thumbnails');
-	add_theme_support('automatic-feed-links');
-	add_editor_style();
+	// This theme uses wp_nav_menu() in one location.
+	register_nav_menus( array(
+		'primary' => esc_html__( 'Main Navigation', 'zeepersonal' ),
+		'footer' => esc_html__( 'Footer Navigation', 'zeepersonal' )
+	) );
 
-	// Add Custom Background
-	add_theme_support('custom-background', array('default-color' => 'e5e5e5'));
+	// Switch default core markup for search form, comment form, and comments to output valid HTML5.
+	add_theme_support( 'html5', array(
+		'search-form', 'comment-form', 'comment-list', 'gallery', 'caption',
+	) );
 
-	// Add Custom Header
-	add_theme_support('custom-header', array(
+	// Set up the WordPress core custom background feature.
+	add_theme_support( 'custom-background', apply_filters( 'zeepersonal_custom_background_args', array('default-color' => 'e5e5e5') ) );
+	
+	// Set up the WordPress core custom header feature.
+	add_theme_support('custom-header', apply_filters( 'zeepersonal_custom_header_args', array(
 		'header-text' => false,
-		'width'	=> 1340,
+		'width'	=> 2500,
 		'height' => 250,
-		'flex-height' => true));
-
-	// Register Navigation Menus
-	register_nav_menu( 'main_navi', __('Main Navigation', 'zeeMagazine_language') );
-
-}
-endif;
-
-
-// Add custom Image Sizes
-add_action( 'after_setup_theme', 'themezee_add_image_sizes' );
-
-if ( ! function_exists( 'themezee_add_image_sizes' ) ):
-function themezee_add_image_sizes() {
-
-	// Add Custom Header Image Size
-	add_image_size( 'custom_header_image', 1340, 250, true);
-
-	// Add Featured Image Size
-	add_image_size( 'featured_image', 200, 200, true);
-
-	// Add Slider Image Size
-	add_image_size( 'slider_image', 880, 290, true);
-
-	// Add Frontpage Thumbnail Sizes
-	add_image_size( 'frontpage_big_image', 600, 240, true);
-	add_image_size( 'frontpage_small_image', 90, 90, true);
-
-	// Add Widget Post Thumbnail Size
-	add_image_size( 'widget_post_thumb', 75, 75, true);
-
-}
-endif;
-
-
-// Register Sidebars
-add_action( 'widgets_init', 'themezee_register_sidebars' );
-
-if ( ! function_exists( 'themezee_register_sidebars' ) ):
-function themezee_register_sidebars() {
-
-	// Register Sidebars
-	register_sidebar( array(
-		'name' => __( 'Main Sidebar', 'zeeMagazine_language' ),
-		'id' => 'sidebar-main',
-		'description' => __( 'Appears on posts and also pages (in case Sidebar Pages has no widgets) except frontpage/fullwidth template.', 'zeeMagazine_language' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget' => '</aside>',
-		'before_title' => '<h3 class="widgettitle">',
-		'after_title' => '</h3>',
-	));
-	register_sidebar( array(
-		'name' => __( 'Sidebar Pages', 'zeeMagazine_language' ),
-		'id' => 'sidebar-pages',
-		'description' => __( 'Appears on static pages only. Leave this widget area empty to use Main Sidebar on pages.', 'zeeMagazine_language' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget' => '</aside>',
-		'before_title' => '<h3 class="widgettitle">',
-		'after_title' => '</h3>',
-	));
+		'flex-height' => true
+	) ) );
 	
 }
-endif;
+endif; // zeepersonal_setup
+add_action( 'after_setup_theme', 'zeepersonal_setup' );
 
 
-/*==================================== INCLUDE FILES ====================================*/
-
-// Includes all files needed for theme options, custom JS/CSS and Widgets
-add_action( 'after_setup_theme', 'themezee_include_files' );
-
-if ( ! function_exists( 'themezee_include_files' ) ):
-function themezee_include_files() {
-
-	// include Theme Option Files
-	require( get_template_directory() . '/includes/options/options-setup.php' );
-	require( get_template_directory() . '/includes/options/options-framework.php' );
-
-	// include Customization Files
-	require( get_template_directory() . '/includes/customization/custom-colors.php' );
-	require( get_template_directory() . '/includes/customization/custom-layout.php' );
-	require( get_template_directory() . '/includes/customization/custom-jscript.php' );
-
-	// include Template Functions
-	require( get_template_directory() . '/includes/template-tags.php' );
-
+/**
+ * Set the content width in pixels, based on the theme's design and stylesheet.
+ * Priority 0 to make it available to lower priority callbacks.
+ *
+ * @global int $content_width
+ */
+function zeepersonal_content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'zeepersonal_content_width', 810 );
 }
-endif;
+add_action( 'after_setup_theme', 'zeepersonal_content_width', 0 );
 
 
-/*==================================== THEME FUNCTIONS ====================================*/
+/**
+ * Register widget areas and custom widgets.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/register_sidebar
+ */
+function zeepersonal_widgets_init() {
+	
+	register_sidebar( array(
+		'name' => esc_html__( 'Sidebar', 'zeepersonal' ),
+		'id' => 'sidebar',
+		'description' => esc_html__( 'Appears on posts and pages except Magazine Homepage and Fullwidth template.', 'zeepersonal' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s clearfix">',
+		'after_widget' => '</aside>',
+		'before_title' => '<div class="widget-header"><h3 class="widget-title">',
+		'after_title' => '</h3></div>',
+	));
+	
+	register_sidebar( array(
+		'name' => esc_html__( 'Header', 'zeepersonal' ),
+		'id' => 'header',
+		'description' => esc_html__( 'Appears on header area. You can use a search or ad widget here.', 'zeepersonal' ),
+		'before_widget' => '<aside id="%1$s" class="header-widget %2$s">',
+		'after_widget' => '</aside>',
+		'before_title' => '<h4 class="header-widget-title">',
+		'after_title' => '</h4>',
+	));
+	
+} // zeepersonal_widgets_init
+add_action( 'widgets_init', 'zeepersonal_widgets_init' );
 
-// Creates a better title element text for output in the head section
-add_filter( 'wp_title', 'themezee_wp_title', 10, 2 );
 
-function themezee_wp_title( $title, $sep = '' ) {
-	global $paged, $page;
+/**
+ * Enqueue scripts and styles.
+ */
+function zeepersonal_scripts() {
+	global $wp_scripts;
+	
+	// Register and Enqueue Stylesheet
+	wp_enqueue_style( 'zeepersonal-stylesheet', get_stylesheet_uri() );
+	
+	// Register Genericons
+	wp_enqueue_style( 'zeepersonal-genericons', get_template_directory_uri() . '/css/genericons/genericons.css' );
+	
+	// Register and Enqueue HTML5shiv to support HTML5 elements in older IE versions
+	wp_enqueue_script( 'zeepersonal-html5shiv', get_template_directory_uri() . '/js/html5shiv.min.js', array(), '3.7.2', false );
+	$wp_scripts->add_data( 'zeepersonal-html5shiv', 'conditional', 'lt IE 9' );
 
-	if ( is_feed() )
-		return $title;
+	// Register and enqueue navigation.js
+	wp_enqueue_script( 'zeepersonal-jquery-navigation', get_template_directory_uri() .'/js/navigation.js', array('jquery') );
+	
+	// Register and enqueue sidebar.js
+	wp_enqueue_script( 'zeepersonal-jquery-sidebar', get_template_directory_uri() .'/js/sidebar.js', array('jquery') );
+	
+	// Register and Enqueue Google Fonts
+	wp_enqueue_style( 'zeepersonal-default-fonts', zeepersonal_google_fonts_url(), array(), null );
 
-	// Add the site name.
-	$title .= get_bloginfo( 'name' );
+	// Register Comment Reply Script for Threaded Comments
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+	
+} // zeepersonal_scripts
+add_action( 'wp_enqueue_scripts', 'zeepersonal_scripts' );
 
-	// Add the site description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) )
-		$title = "$title $sep $site_description";
 
-	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 )
-		$title = "$title $sep " . sprintf( __( 'Page %s', 'zeeMagazine_language' ), max( $paged, $page ) );
+/**
+ * Retrieve Font URL to register default Google Fonts
+ */
+function zeepersonal_google_fonts_url() {
+    
+	// Set default Fonts
+	$font_families = array( 'Open Sans', 'Merriweather' );
 
-	return $title;
+	// Build Fonts URL
+	$query_args = array(
+		'family' => urlencode( implode( '|', $font_families ) ),
+		'subset' => urlencode( 'latin,latin-ext' ),
+	);
+	$fonts_url = add_query_arg( $query_args, '//fonts.googleapis.com/css' );
+
+    return apply_filters( 'zeepersonal_google_fonts_url', $fonts_url );
 }
 
 
-// Add Default Menu Fallback Function
-function themezee_default_menu() {
-	echo '<ul id="mainnav-menu" class="menu">'. wp_list_pages('title_li=&echo=0') .'</ul>';
-}
+/**
+ * Include Files
+ */
+ 
+// include Theme Customizer Options
+require get_template_directory() . '/inc/customizer/customizer.php';
+require get_template_directory() . '/inc/customizer/default-options.php';
 
+// Include Extra Functions
+require get_template_directory() . '/inc/extras.php';
 
-// Display Credit Link Function
-function themezee_credit_link() { ?>
-
-	<a href="http://themezee.com/themes/zeemagazine/"><?php _e('zeeMagazine Theme', 'zeeMagazine_language'); ?></a>
-
-<?php
-}
-
-
-// Change Excerpt Length
-add_filter('excerpt_length', 'themezee_excerpt_length');
-function themezee_excerpt_length($length) {
-    return 60;
-}
-
-
-// Slideshow Excerpt Length
-function themezee_slideshow_excerpt_length($length) {
-    return 30;
-}
-
-// Frontpage Category Excerpt Length
-function themezee_frontpage_category_excerpt_length($length) {
-    return 25;
-}
-
-// Change Excerpt More
-add_filter('excerpt_more', 'themezee_excerpt_more');
-function themezee_excerpt_more($more) {
-    return '';
-}
-
-
-// Custom Template for comments and pingbacks.
-if ( ! function_exists( 'themezee_list_comments' ) ):
-function themezee_list_comments($comment, $args, $depth) {
-
-	$GLOBALS['comment'] = $comment;
-
-	if( $comment->comment_type == 'pingback' or $comment->comment_type == 'trackback' ) : ?>
-
-		<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-			<p><?php _e( 'Pingback:', 'zeeMagazine_language' ); ?> <?php comment_author_link(); ?>
-			<?php edit_comment_link( __( '(Edit)', 'zeeMagazine_language' ), '<span class="edit-link">', '</span>' ); ?>
-			</p>
-
-	<?php else : ?>
-
-		<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-
-			<div id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-
-				<div class="comment-author vcard">
-					<?php echo get_avatar( $comment, 56 ); ?>
-					<?php printf(__('<span class="fn">%s</span>', 'zeeMagazine_language'), get_comment_author_link()) ?>
-				</div>
-
-		<?php if ($comment->comment_approved == '0') : ?>
-				<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'zeeMagazine_language' ); ?></p>
-		<?php endif; ?>
-
-				<div class="comment-meta commentmetadata">
-					<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf(__('%1$s at %2$s', 'zeeMagazine_language'), get_comment_date(),  get_comment_time()) ?></a>
-					<?php edit_comment_link(__('(Edit)', 'zeeMagazine_language'),'  ','') ?>
-				</div>
-
-				<div class="comment-content"><?php comment_text(); ?></div>
-
-				<div class="reply">
-					<?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-				</div>
-
-			</div>
-<?php
-	endif;
-
-}
-endif;
-
-
-// Retrieve Frontpage Posts Query
-function themezee_frontpage_posts_query($paged) {
-
-	// Get Query Arguments
-	$options = get_option('zeemagazine_options');
-	$frontpage_posts_category = $options['themeZee_frontpage_posts_category'];
-
-	$query_arguments = array(
-		'post_type' => 'post',
-		'post_status' => 'publish',
-		'ignore_sticky_posts' => true,
-		'posts_per_page' => 4,
-		'paged' => $paged,
-		'orderby' => 'date',
-		'order' => 'DESC',
-		'category_name' => $frontpage_posts_category
-		);
-
-	$zee_frontpage_posts_query = new WP_Query($query_arguments);
-
-	return $zee_frontpage_posts_query;
-}
-?>
+// include Template Functions
+require get_template_directory() . '/inc/template-tags.php';
