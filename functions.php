@@ -36,12 +36,13 @@ function zeemagazine_setup() {
 	add_theme_support( 'post-thumbnails' );
 	
 	// Set detfault Post Thumbnail size
-	set_post_thumbnail_size( 900, 400, true );
+	set_post_thumbnail_size( 350, 250, true );
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
 		'primary' => esc_html__( 'Main Navigation', 'zeemagazine' ),
-		'footer' => esc_html__( 'Footer Navigation', 'zeemagazine' )
+		'social' => esc_html__( 'Social Icons', 'zeemagazine' ),
+		'footer' => esc_html__( 'Footer Navigation', 'zeemagazine' ),
 	) );
 
 	// Switch default core markup for search form, comment form, and comments to output valid HTML5.
@@ -50,13 +51,13 @@ function zeemagazine_setup() {
 	) );
 
 	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'zeemagazine_custom_background_args', array('default-color' => 'e5e5e5') ) );
+	add_theme_support( 'custom-background', apply_filters( 'zeemagazine_custom_background_args', array('default-color' => 'eeeeee') ) );
 	
 	// Set up the WordPress core custom header feature.
 	add_theme_support('custom-header', apply_filters( 'zeemagazine_custom_header_args', array(
 		'header-text' => false,
-		'width'	=> 2500,
-		'height' => 250,
+		'width'	=> 1270,
+		'height' => 200,
 		'flex-height' => true
 	) ) );
 	
@@ -148,7 +149,7 @@ add_action( 'wp_enqueue_scripts', 'zeemagazine_scripts' );
 function zeemagazine_google_fonts_url() {
     
 	// Set default Fonts
-	$font_families = array( 'Open Sans', 'Merriweather' );
+	$font_families = array( 'Open Sans', 'Hind' );
 
 	// Build Fonts URL
 	$query_args = array(
@@ -159,6 +160,18 @@ function zeemagazine_google_fonts_url() {
 
     return apply_filters( 'zeemagazine_google_fonts_url', $fonts_url );
 }
+
+
+/**
+ * Add custom sizes for featured images
+ */
+function zeemagazine_add_image_sizes() {
+	
+	// Add Custom Header Image Size
+	add_image_size( 'zeemagazine-header-image', 1270, 200, true );
+	
+}
+add_action( 'after_setup_theme', 'zeemagazine_add_image_sizes' );
 
 
 /**

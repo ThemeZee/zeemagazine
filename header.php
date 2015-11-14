@@ -30,7 +30,7 @@ $theme_options = zeemagazine_theme_options();
 		
 		<header id="masthead" class="site-header clearfix" role="banner">
 			
-			<div class="header-main container clearfix">
+			<div class="header-main clearfix">
 						
 				<div id="logo" class="site-branding clearfix">
 				
@@ -38,25 +38,31 @@ $theme_options = zeemagazine_theme_options();
 				
 				</div><!-- .site-branding -->
 				
-				<nav id="main-navigation" class="primary-navigation navigation clearfix" role="navigation">
-					<?php 
-						// Display Main Navigation
-						wp_nav_menu( array(
-							'theme_location' => 'primary', 
-							'container' => false, 
-							'menu_class' => 'main-navigation-menu', 
-							'echo' => true, 
-							'fallback_cb' => 'zeemagazine_default_menu')
-						);
-					?>
-				</nav><!-- #main-navigation -->
-			
+				<div class="header-content-wrap">
+				
+					<?php get_template_part( 'template-parts/header-content' ); ?>
+				
+				</div>
+
 			</div><!-- .header-main -->
+			
+			<nav id="main-navigation" class="primary-navigation navigation clearfix" role="navigation">
+				<?php 
+					// Display Main Navigation
+					wp_nav_menu( array(
+						'theme_location' => 'primary', 
+						'container' => false, 
+						'menu_class' => 'main-navigation-menu', 
+						'echo' => true, 
+						'fallback_cb' => 'zeemagazine_default_menu')
+					);
+				?>
+			</nav><!-- #main-navigation -->
 		
 		</header><!-- #masthead -->
 		
 		<?php // Display Custom Header Image
 		zeemagazine_header_image(); ?>
 		
-		<div id="content" class="site-content container clearfix">
+		<div id="content" class="site-content clearfix">
 		

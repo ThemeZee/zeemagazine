@@ -42,13 +42,13 @@ function zeemagazine_default_options() {
 	$default_options = array(
 		'layout' 							=> 'right-sidebar',
 		'post_content' 						=> 'excerpt',
-		'excerpt_length' 					=> 30,
+		'excerpt_length' 					=> 40,
 		'post_thumbnail_archives'			=> true,
 		'post_thumbnail_single'				=> true,
 		'meta_date'							=> true,
 		'meta_author'						=> true,
 		'meta_category'						=> true,
-		'meta_comments'						=> false,
+		'meta_comments'						=> true,
 		'meta_tags'							=> true
 	);
 	

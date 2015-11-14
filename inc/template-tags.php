@@ -27,14 +27,23 @@ if ( ! function_exists( 'zeemagazine_header_image' ) ):
  * Displays the custom header image below the navigation menu
  */
 function zeemagazine_header_image() {
+	
+	// Check if page is displayed and featured header image is used
+	if( is_page() && has_post_thumbnail() ) : ?>
 		
+		<div id="headimg" class="header-image featured-image-header">
+			<?php the_post_thumbnail( 'zeemagazine-header-image' ); ?>
+		</div>
+	
+	<?php
 	// Check if there is a custom header image
-	if( get_header_image() ) : ?>
+	elseif( get_header_image() ) : ?>
 		
 		<div id="headimg" class="header-image">
 			<img src="<?php echo get_header_image(); ?>" />
 		</div>
-<?php 
+	
+	<?php 
 	endif;
 
 }
@@ -55,7 +64,7 @@ function zeemagazine_post_image_archives() {
 		
 		<div class="entry-thumbnail">
 			<a href="<?php esc_url( the_permalink() ); ?>" rel="bookmark">
-				<?php the_post_thumbnail(); ?>
+				<?php the_post_thumbnail( 'post-thumbnail', array( 'class' => 'alignleft' ) ); ?>
 			</a>
 		</div>
 <?php 
@@ -78,7 +87,7 @@ function zeemagazine_post_image_single() {
 	if ( true == $theme_options['post_thumbnail_single'] ) : ?>
 		
 		<div class="entry-thumbnail">
-			<?php the_post_thumbnail(); ?>
+			<?php the_post_thumbnail( 'post-thumbnail', array( 'class' => 'alignleft' ) ); ?>
 		</div>
 <?php 
 	endif;
@@ -97,9 +106,9 @@ function zeemagazine_entry_meta() {
 	$theme_options = zeemagazine_theme_options();
 	
 	// Display Postmeta
-	if ( true == $theme_options['meta_date'] or true == $theme_options['meta_author'] ) :
+	if ( true == $theme_options['meta_date'] or true == $theme_options['meta_author'] or true == $theme_options['meta_comments'] ) :
 	
-		echo '<div class="entry-meta">';
+		echo '<div class="entry-meta clearfix">';
 		
 		// Display Date unless user has deactivated it via settings
 		if ( true == $theme_options['meta_date'] ) :
@@ -112,13 +121,6 @@ function zeemagazine_entry_meta() {
 		if ( true == $theme_options['meta_author'] ) :
 		
 			zeemagazine_meta_author();
-		
-		endif; 
-		
-		// Display Categories unless user has deactivated it via settings
-		if ( true == $theme_options['meta_category'] ) :
-		
-			zeemagazine_meta_category();
 		
 		endif; 
 		
@@ -180,9 +182,26 @@ if ( ! function_exists( 'zeemagazine_meta_category' ) ):
  */
 function zeemagazine_meta_category() {  
 	
-	echo '<span class="meta-category"> ' . get_the_category_list(' / '). '</span>';
+	echo '<span class="meta-category clearfix">' . get_the_category_list(' '). '</span>';
 
 }  // zeemagazine_meta_category()
+endif;
+
+
+if ( ! function_exists( 'zeemagazine_meta_tags' ) ):
+/**
+ * Displays the post tags
+ */
+function zeemagazine_meta_tags() { 
+
+	// Get Tags
+	$tag_list = get_the_tag_list('', '');
+	
+	if ( $tag_list ) {
+		echo '<span class="meta-tags clearfix">' . $tag_list. '</span>';
+	}
+
+}  // zeemagazine_meta_tags()
 endif;
 
 
@@ -205,30 +224,30 @@ function zeemagazine_meta_comments() {
 endif;
 
 
-if ( ! function_exists( 'zeemagazine_entry_tags' ) ):
+if ( ! function_exists( 'zeemagazine_entry_footer' ) ):
 /**
- * Displays the post tags on single post view
+ * Displays the post categories and tags on single post view
  */
-function zeemagazine_entry_tags() {
+function zeemagazine_entry_footer() {
 	
 	// Get Theme Options from Database
 	$theme_options = zeemagazine_theme_options();
 	
-	// Get Tags
-	$tag_list = get_the_tag_list('', '');
+	// Display Categories unless user has deactivated it via settings
+	if ( true == $theme_options['meta_category'] ) :
 	
-	// Display Tags
-	if ( $tag_list && $theme_options['meta_tags'] ) : ?>
+		zeemagazine_meta_category();
 	
-		<div class="entry-tags clearfix">
-			<span class="meta-tags">
-				<?php echo $tag_list; ?>
-			</span>
-		</div><!-- .entry-tags -->
-<?php 
-	endif;
+	endif; 
+	
+	// Display Tags unless user has deactivated it via settings
+	if ( true == $theme_options['meta_tags'] ) :
+	
+		zeemagazine_meta_tags();
+	
+	endif; 
 
-} // zeemagazine_entry_tags()
+} // zeemagazine_entry_footer()
 endif;
 
 

@@ -46,7 +46,7 @@ function zeemagazine_customize_register_post_settings( $wp_customize ) {
 	
 	// Add Setting and Control for Excerpt Length
 	$wp_customize->add_setting( 'zeemagazine_theme_options[excerpt_length]', array(
-        'default'           => 30,
+        'default'           => 40,
 		'type'           	=> 'option',
         'transport'         => 'refresh',
         'sanitize_callback' => 'absint'
@@ -157,21 +157,6 @@ function zeemagazine_customize_register_post_settings( $wp_customize ) {
 		'priority' => 8
 		)
 	);
-	$wp_customize->add_setting( 'zeemagazine_theme_options[meta_category]', array(
-        'default'           => true,
-		'type'           	=> 'option',
-        'transport'         => 'refresh',
-        'sanitize_callback' => 'zeemagazine_sanitize_checkbox'
-		)
-	);
-    $wp_customize->add_control( 'zeemagazine_control_meta_category', array(
-        'label'    => esc_html__( 'Display post categories', 'zeemagazine' ),
-        'section'  => 'zeemagazine_section_post',
-        'settings' => 'zeemagazine_theme_options[meta_category]',
-        'type'     => 'checkbox',
-		'priority' => 9
-		)
-	);
 	$wp_customize->add_setting( 'zeemagazine_theme_options[meta_comments]', array(
         'default'           => true,
 		'type'           	=> 'option',
@@ -184,10 +169,25 @@ function zeemagazine_customize_register_post_settings( $wp_customize ) {
         'section'  => 'zeemagazine_section_post',
         'settings' => 'zeemagazine_theme_options[meta_comments]',
         'type'     => 'checkbox',
+		'priority' => 9
+		)
+	);
+	$wp_customize->add_setting( 'zeemagazine_theme_options[meta_category]', array(
+        'default'           => true,
+		'type'           	=> 'option',
+        'transport'         => 'refresh',
+        'sanitize_callback' => 'zeemagazine_sanitize_checkbox'
+		)
+	);
+    $wp_customize->add_control( 'zeemagazine_control_meta_category', array(
+        'label'    => esc_html__( 'Display categories on single posts', 'zeemagazine' ),
+        'section'  => 'zeemagazine_section_post',
+        'settings' => 'zeemagazine_theme_options[meta_category]',
+        'type'     => 'checkbox',
 		'priority' => 10
 		)
 	);
-		$wp_customize->add_setting( 'zeemagazine_theme_options[meta_tags]', array(
+	$wp_customize->add_setting( 'zeemagazine_theme_options[meta_tags]', array(
         'default'           => true,
 		'type'           	=> 'option',
         'transport'         => 'refresh',
@@ -195,7 +195,7 @@ function zeemagazine_customize_register_post_settings( $wp_customize ) {
 		)
 	);
     $wp_customize->add_control( 'zeemagazine_control_meta_tags', array(
-        'label'    => esc_html__( 'Display post tags', 'zeemagazine' ),
+        'label'    => esc_html__( 'Display tags on single posts', 'zeemagazine' ),
         'section'  => 'zeemagazine_section_post',
         'settings' => 'zeemagazine_theme_options[meta_tags]',
         'type'     => 'checkbox',
