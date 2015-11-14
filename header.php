@@ -4,11 +4,11 @@
  *
  * Displays all of the <head> section and everything up till <div id="content">
  *
- * @package zeePersonal
+ * @package zeeMagazine
  */
  
 // Get Theme Options from Database
-$theme_options = zeepersonal_theme_options();
+$theme_options = zeemagazine_theme_options();
 	
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -26,7 +26,7 @@ $theme_options = zeepersonal_theme_options();
 
 	<div id="page" class="hfeed site">
 		
-		<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'zeepersonal' ); ?></a>
+		<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'zeemagazine' ); ?></a>
 		
 		<header id="masthead" class="site-header clearfix" role="banner">
 			
@@ -34,7 +34,7 @@ $theme_options = zeepersonal_theme_options();
 						
 				<div id="logo" class="site-branding clearfix">
 				
-					<?php do_action('zeepersonal_site_title'); ?>
+					<?php do_action('zeemagazine_site_title'); ?>
 				
 				</div><!-- .site-branding -->
 				
@@ -46,7 +46,7 @@ $theme_options = zeepersonal_theme_options();
 							'container' => false, 
 							'menu_class' => 'main-navigation-menu', 
 							'echo' => true, 
-							'fallback_cb' => 'zeepersonal_default_menu')
+							'fallback_cb' => 'zeemagazine_default_menu')
 						);
 					?>
 				</nav><!-- #main-navigation -->
@@ -56,7 +56,7 @@ $theme_options = zeepersonal_theme_options();
 		</header><!-- #masthead -->
 		
 		<?php // Display Custom Header Image
-		zeepersonal_header_image(); ?>
+		zeemagazine_header_image(); ?>
 		
 		<div id="content" class="site-content container clearfix">
 		

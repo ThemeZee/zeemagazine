@@ -4,13 +4,13 @@
  *
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  *
- * @package zeePersonal
+ * @package zeeMagazine
  */
  
 get_header(); 
 
 // Get Theme Options from Database
-$theme_options = zeepersonal_theme_options();
+$theme_options = zeemagazine_theme_options();
 
 ?>
 		
@@ -24,7 +24,7 @@ $theme_options = zeepersonal_theme_options();
 				endwhile;
 
 				// Display Pagination	
-				zeepersonal_pagination();
+				zeemagazine_pagination();
 
 			endif; ?>
 			

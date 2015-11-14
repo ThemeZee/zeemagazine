@@ -2,7 +2,7 @@
 /**
  * The template for displaying single posts
  *
- * @package zeePersonal
+ * @package zeeMagazine
  */
 ?>
 
@@ -10,7 +10,7 @@
 		
 		<header class="entry-header">
 			
-			<?php zeepersonal_post_image_single(); ?>
+			<?php zeemagazine_post_image_single(); ?>
 
 			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
@@ -23,13 +23,13 @@
 			
 			<div class="page-links"><?php wp_link_pages(); ?></div>
 			
-			<?php zeepersonal_entry_tags(); ?>
+			<?php zeemagazine_entry_tags(); ?>
 			
 		</div><!-- .entry-content -->
 		
 		<footer class="entry-footer">
 			
-			<?php zeepersonal_entry_meta(); ?>
+			<?php zeemagazine_entry_meta(); ?>
 			
 		</footer><!-- .entry-footer -->
 
