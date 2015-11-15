@@ -51,7 +51,7 @@ function zeemagazine_setup() {
 	) );
 
 	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'zeemagazine_custom_background_args', array('default-color' => 'eeeeee') ) );
+	add_theme_support( 'custom-background', apply_filters( 'zeemagazine_custom_background_args', array( 'default-color' => '225588' ) ) );
 	
 	// Set up the WordPress core custom header feature.
 	add_theme_support('custom-header', apply_filters( 'zeemagazine_custom_header_args', array(

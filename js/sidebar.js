@@ -23,20 +23,20 @@
 		function showSidebar() {
 			
 			sidebar.show();
-			sidebar.animate({ 'max-width' : '400px' }, 400 );
+			sidebar.animate({ 'max-width' : '400px' }, 300 );
 					
-			content.fadeTo('400', 0.5); 
+			overlay.show();
 			
 		}
 		
 		/* Hide sidebar and show full content area */
 		function hideSidebar() {
 			
-			sidebar.animate({ 'max-width': '0' },  400, function(){
+			sidebar.animate({ 'max-width': '0' },  300, function(){
 				sidebar.hide();
 			});
 					
-			content.fadeTo('400', 1);
+			overlay.hide();
 		}
 		
 		/* Reset sidebar on desktop screen sizes */
@@ -45,19 +45,22 @@
 			sidebar.show();
 			sidebar.css({ 'max-width' : '100%' });
 					
-			content.fadeTo('0', 1); 
+			overlay.hide();
 		}
 		
 		/* Only do something if sidebar exists */
 		if ( $( '.sidebar' ).length > 0 ) {
 		
 			/* Add sidebar toggle */
-			$('#main-navigation').after('<button id=\"sidebar-toggle\" class=\"sidebar-navigation-toggle\"></button>');
+			$('#main-navigation').before('<button id=\"sidebar-toggle\" class=\"sidebar-navigation-toggle\"></button>');
+			
+			/* Add Overlay */
+			$('body').append('<div id=\"sidebar-overlay\"></div>');
 			
 			/* Setup Selectors */
 			var button = $('#sidebar-toggle'),
 				sidebar = $('.sidebar'),
-				content = $('.content-area, .post-slider-container');
+				overlay = $('#sidebar-overlay');
 			
 			/* Add sidebare toggle effect */
 			button.on('click', function(){
@@ -84,7 +87,7 @@
 				sidebar.hide();
 				
 				/* Hide Sidebar when Content Area is clicked */
-				content.on('click', function(e){
+				overlay.on('click', function(e){
 					if( sidebar.is(':visible') ) {
 						e.preventDefault();
 						hideSidebar();
@@ -96,7 +99,7 @@
 				
 				/* Reset Sidebar Menu */
 				resetSidebar();
-				content.unbind( 'click' );
+				overlay.unbind( 'click' );
 				
 			}
 			
