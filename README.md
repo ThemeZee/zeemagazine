@@ -102,10 +102,12 @@ G) Licenses of bundled resources
 	Copyright: 2015 Pixabay users werner22brigitte, sciencefreak, geralt
 	
 	Images used in screenshot.jpg:
-	Image 1: https://pixabay.com/en/butterfly-yellow-insect-nature-196745/
-	Image 2: https://pixabay.com/en/star-projector-planetarium-projector-91866/
-	Image 3: https://pixabay.com/en/leaf-green-leaf-veins-filigree-141494/
-	Image 4: https://pixabay.com/en/almond-blossom-cherry-blossom-5378/
+	Image 1: https://pixabay.com/en/guitar-classical-guitar-756326/
+	Image 2: https://pixabay.com/en/sea-boot-seychelles-water-ship-1027999/
+	Image 3: https://pixabay.com/en/sunrise-phu-quoc-island-ocean-1014713/
+	Image 4: https://pixabay.com/en/books-student-study-education-1012088/
+	Image 5: https://pixabay.com/en/candle-decorative-decoration-912773/
+	Image 6: https://pixabay.com/en/sea-boot-seychelles-water-ship-1002804/
 
 ===================================
 Enjoy!

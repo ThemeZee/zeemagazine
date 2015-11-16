@@ -2,6 +2,15 @@
 zeeMagazine Changelog
 ===================================
 
+Version 1.5.1
+-----------------------------------
+[updated] the theme to a modern design *facelift*
+
+Version 1.5
+-----------------------------------
+[moved] all theme options to Customizer
+[added] responsive layout based on underscores
+
 Version 1.4.1
 -----------------------------------
 - added "open in new window" feature to social media icons widget

@@ -4,7 +4,7 @@ Theme URI: http://themezee.com/themes/zeemagazine/
 Author: ThemeZee
 Author URI: http://themezee.com
 Description: zeeMagazine is a nice theme for a personal blog with great features.
-Version: 1.5
+Version: 1.5.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: zeemagazine
@@ -650,8 +650,8 @@ textarea {
 	padding: 0;
 	color: #225588;
 	font-family: 'Hind', Tahoma, Arial;
-	font-size: 44px;
-	font-size: 2.75rem;
+	font-size: 48px;
+	font-size: 3rem;
 	text-decoration: none;
 }
 
@@ -939,7 +939,7 @@ textarea {
 .widget ul {
 	margin: 0;
 	padding: 0 0.3em;
-	list-style: circle inside;
+	list-style: square inside;
 }
 
 .widget ul .children,
@@ -966,84 +966,6 @@ textarea {
 /*--------------------------------------------------------------
 ## 11.1 - Default Widgets
 --------------------------------------------------------------*/
-
-/* Default Archive & Category Wigdets */
-.widget_archive ul, 
-.widget_categories ul {
-	list-style: none;
-}
-
-.widget_archive ul li:before, 
-.widget_categories ul li:before {
-	display: inline-block;
-	-webkit-font-smoothing: antialiased;
-	font: normal 18px 'Genericons';
-	vertical-align: middle;
-	color: #555;
-	margin: 0 0.3em 0 0;
-}
-
-.widget_archive ul li:before {
-	content: '\f307';
-}
-
-.widget_categories ul li:before {
-	content: '\f301';
-}
-
-/* Default Recent Posts & Comments Wigdets */
-.widget_recent_entries ul, 
-.widget_recent_comments ul {
-	list-style: none;
-}
-
-.widget_recent_entries ul li .post-date {
-	color: #888;
-	font-size: 12px;
-	font-size: 0.75rem;
-	font-style: italic;
-}
-
-.widget_recent_entries ul li:before, 
-.widget_recent_comments ul li:before {
-	display: inline-block;
-	-webkit-font-smoothing: antialiased;
-	font: normal 16px 'Genericons';
-	vertical-align: middle;
-	color: #555;
-	margin: 0 0.2em 0 0;
-}
-
-.widget_recent_entries ul li:before {
-	content: '\f303';
-}
-
-.widget_recent_comments ul li:before {
-	content: '\f300';
-}
-
-/* Default Meta & Pages Wigdets */
-.widget_meta ul, 
-.widget_pages ul, 
-.widget_nav_menu ul {
-	list-style: none;
-}
-
-.widget_meta ul li a:before, 
-.widget_pages ul li a:before ,
-.widget_nav_menu ul li a:before {
-	display: inline-block;
-	-webkit-font-smoothing: antialiased;
-	font: normal 18px 'Genericons';
-	vertical-align: middle;
-	color: #555;
-	margin: 0 0.1em 0 0;
-	content: '\f432';
-	-webkit-transform:rotate(90deg);
-	-moz-transform:rotate(90deg);
-	-o-transform:rotate(90deg);
-	-ms-transform:rotate(90deg);
-}
 
 /* Tagcloud Widget */
 .widget_tag_cloud .tagcloud {
@@ -1177,12 +1099,12 @@ textarea {
 
 .entry-thumbnail .wp-post-image {
 	margin: 1em 1.5em 1em 0;
-	max-width: 100%;
+	max-width: 50%;
 	height: auto;
 }
 
 .sticky {
-
+	border-left: 5px solid #225588;
 }
 	
 /* Page Links | wp_link_pages() */
@@ -1652,8 +1574,17 @@ object {
 --------------------------------------------------------------*/
 @media only screen and (max-width: 80em) {
 	
+	.site-title {
+		font-size: 40px;
+		font-size: 2.5rem;
+	}
 	
-	
+	.page-title, 
+	.entry-title {
+		font-size: 36px;
+		font-size: 2.25rem;
+	}
+
 }
 
 /*--------------------------------------------------------------
@@ -1714,6 +1645,17 @@ object {
 	.site-branding {
 		float: none;
 		text-align: center;
+	}
+	
+	.site-title {
+		font-size: 36px;
+		font-size: 2.25rem;
+	}
+	
+	.page-title, 
+	.entry-title {
+		font-size: 32px;
+		font-size: 2rem;
 	}
 	
 	/* Header Content */
@@ -1966,6 +1908,9 @@ object {
 --------------------------------------------------------------*/
 @media only screen and (max-width: 50em) {
 	
+	.entry-meta .meta-comments {
+		float: none;
+	}
 	
 	/*** Mobile Footer Navigation ***/
 	.footer-navigation {
@@ -2040,6 +1985,7 @@ object {
 	.header-content .social-icons-navigation {
 		display: none;
 	}
+	
 }
 
 /*--------------------------------------------------------------
@@ -2077,15 +2023,35 @@ object {
 		margin: 0 0 1em 0;
 	}
 	
+	.site-title {
+		font-size: 32px;
+		font-size: 2rem;
+	}
+	
+	.page-title, 
+	.entry-title {
+		font-size: 28px;
+		font-size: 1.75rem;
+	}
+
 }
 
 /*--------------------------------------------------------------
 ## 14.8 - Mobile Large ( < 560px )
 --------------------------------------------------------------*/
 @media only screen and (max-width: 35em) {
+	
+	.entry-thumbnail .wp-post-image {
+		float: none;
+		margin: 1em 0;
+		max-width: 100%;
+	}
 
-
-
+	.entry-meta .meta-date, 
+	.entry-meta .meta-author, 
+	.entry-meta .meta-comments {
+		display: block;
+	}
 	
 }
 
@@ -2106,6 +2072,16 @@ object {
 --------------------------------------------------------------*/
 @media only screen and (max-width: 20em) {
 	
+	.site-title {
+		font-size: 28px;
+		font-size: 1.75rem;
+	}
+	
+	.page-title, 
+	.entry-title {
+		font-size: 24px;
+		font-size: 1.5rem;
+	}
 	
 }
 

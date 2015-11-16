@@ -36,7 +36,7 @@ function zeemagazine_setup() {
 	add_theme_support( 'post-thumbnails' );
 	
 	// Set detfault Post Thumbnail size
-	set_post_thumbnail_size( 350, 250, true );
+	set_post_thumbnail_size( 450, 325, true );
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
@@ -187,3 +187,6 @@ require get_template_directory() . '/inc/extras.php';
 
 // include Template Functions
 require get_template_directory() . '/inc/template-tags.php';
+
+// Include support functions for Theme Addons
+require get_template_directory() . '/inc/addons.php';
